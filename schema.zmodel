@@ -1,0 +1,379 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
+datasource db {
+  provider = "mysql" // Atau "mysql", sesuaikan dengan kebutuhan
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int        @id @default(autoincrement())
+  name                String
+  username            String     @unique @length(min: 3)
+  identity            String     @unique
+  email               String     @unique @email('must be a valid email')
+  password            String     @password @length(min: 8)
+  roles               Role[]     @relation("UserRole")
+  roleUnits           RoleUnit[]
+  eduk_status         String?
+  eduk_foto           String?
+  eduk_gelar_depan    String?
+  eduk_gelar_belakang String?
+  created_at          DateTime   @default(now())
+  updated_at          DateTime   @updatedAt
+
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@allow('update', auth().roles?[name == 'system'] || this == auth())
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  users       User[]       @relation("UserRole")
+  permissions Permission[] @relation("RolePermission")
+  roleUnits   RoleUnit[]
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+
+  @@allow('all', false)
+  @@allow('read', true)
+}
+
+model Permission {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  roles       Role[]   @relation("RolePermission")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@allow('all', false)
+  @@allow('read', true)
+}
+
+model Unit {
+  id          Int        @id @default(autoincrement())
+  codename    String     @unique
+  name        String     @unique
+  description String?
+  roleUnits   RoleUnit[]
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+
+  @@allow('all', false)
+  @@allow('read', true)
+}
+
+model RoleUnit {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  unit       Unit     @relation(fields: [unit_id], references: [id])
+  unit_id    Int
+  role       Role     @relation(fields: [role_id], references: [id])
+  role_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([user_id, role_id, unit_id]) // Compound unique constraint
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Mahasiswa {
+  id                      Int          @id @default(autoincrement())
+  uuid                    String?      @unique
+  nomor_peserta           String?
+  nama                    String
+  status_kip              Boolean?
+  tempat_lahir            String?
+  tanggal_lahir           DateTime?
+  jenis_kelamin           String
+  golongan_darah          String?
+  agama                   Agama?       @relation(fields: [agama_id], references: [id])
+  agama_id                Int?
+  nik                     String?
+  negara                  Negara?      @relation(fields: [negara_id], references: [id])
+  negara_id               Int?
+  provinsi                Provinsi?    @relation(fields: [provinsi_id], references: [id])
+  provinsi_id             Int?
+  kota                    Kota?        @relation(fields: [kota_id], references: [id])
+  kota_id                 Int?
+  kecamatan               Kecamatan?   @relation(fields: [kecamatan_id], references: [id])
+  kecamatan_id            Int?
+  kelurahan               Kelurahan?   @relation(fields: [kelurahan_id], references: [id])
+  kelurahan_id            Int?
+  alamat                  String?
+  rt                      String?
+  rw                      String?
+  kode_pos                String?
+  email                   String?
+  no_hp                   String?
+  nim_sebelumnya          String?
+  programStudi            ProgramStudi @relation(fields: [programStudi_id], references: [id])
+  programStudi_id         Int
+  ipk                     Float?
+  ukt                     Float?
+  spp                     Float?
+  matrikulasi             Boolean?
+  kelas                   String?
+  riwayat_pendidikan_sma  String?
+  riwayat_pendidikan_univ String?
+  data_ayah               String?
+  data_ibu                String?
+  data_wali               String?
+  foto                    String?
+  ijazah                  String?
+  penerimaan              Penerimaan   @relation(fields: [penerimaan_id], references: [id])
+  penerimaan_id           Int
+  jalur                   Jalur        @relation(fields: [jalur_id], references: [id])
+  jalur_id                Int
+  created_at              DateTime     @default(now())
+  updated_at              DateTime     @updatedAt()
+
+  @@map("mahasiswa")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model ProgramStudi {
+  id            Int         @id @default(autoincrement())
+  nama          String
+  fakultas_id   Int
+  strata_id     Int
+  status        Boolean?
+  fakultas      Fakultas    @relation(fields: [fakultas_id], references: [id])
+  strata        Strata      @relation(fields: [strata_id], references: [id])
+  mahasiswaList Mahasiswa[]
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  @@map("program_studi")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Fakultas {
+  id               Int            @id @default(autoincrement())
+  nama             String
+  programStudiList ProgramStudi[]
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+
+  @@map("fakultas")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Strata {
+  id               Int            @id @default(autoincrement())
+  nama             String
+  programStudiList ProgramStudi[]
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+
+  @@map("strata")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Penerimaan {
+  id                  Int               @id @default(autoincrement())
+  uuid                String            @unique @default(uuid())
+  nama                String
+  keterangan          String?
+  catatan             String?
+  tahap               String?
+  status              Boolean?
+  mahasiswaList       Mahasiswa[]
+  penerimaanJalurList PenerimaanJalur[]
+  created_at          DateTime          @default(now())
+  updated_at          DateTime          @updatedAt
+
+  @@map("penerimaan")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Jalur {
+  id                  Int               @id @default(autoincrement())
+  kode_jalur          String
+  nama_jalur          String
+  keterangan          String?
+  status              Boolean?
+  mahasiswaList       Mahasiswa[]
+  penerimaanJalurList PenerimaanJalur[]
+  created_at          DateTime          @default(now())
+  updated_at          DateTime          @updatedAt
+
+  @@map("jalur")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model PenerimaanJalur {
+  id            Int        @id @default(autoincrement())
+  penerimaan_id Int
+  jalur_id      Int
+  penerimaan    Penerimaan @relation(fields: [penerimaan_id], references: [id])
+  jalur         Jalur      @relation(fields: [jalur_id], references: [id])
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+
+  @@map("penerimaan_jalur")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Sekolah {
+  id           Int       @id @default(autoincrement())
+  kode_sekolah String    @unique
+  nama_sekolah String
+  alamat       String?
+  kelurahan    String?
+  provinsi     Provinsi? @relation(fields: [provinsi_id], references: [id])
+  provinsi_id  Int?
+  akreditasi   String?
+  status       Boolean?
+  tipe         String?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime? // soft delete
+
+  @@map("sekolah")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Universitas {
+  id          Int       @id @default(autoincrement())
+  kode_pt     String    @unique
+  nama        String
+  provinsi    Provinsi? @relation(fields: [provinsi_id], references: [id])
+  provinsi_id Int?
+  status      Boolean?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime? // soft delete
+
+  @@map("universitas")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Agama {
+  id            Int         @id @default(autoincrement())
+  nama          String      @unique // Nama unik untuk menghindari duplikasi
+  mahasiswaList Mahasiswa[] // Relasi ke Mahasiswa
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt()
+  deleted_at    DateTime? // soft delete
+
+  @@map("agama")
+  @@allow('all', false)
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Kelurahan {
+  id             Int         @id @default(autoincrement())
+  kode_kelurahan String      @unique
+  nama           String
+  mahasiswaList  Mahasiswa[] // Relasi ke Mahasiswa
+  kecamatan      Kecamatan   @relation(fields: [kecamatan_id], references: [id])
+  kecamatan_id   Int
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt()
+  deleted_at     DateTime? // soft delete
+
+  @@map("kelurahan")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Kecamatan {
+  id             Int         @id @default(autoincrement())
+  kode_kecamatan String      @unique
+  nama           String
+  mahasiswaList  Mahasiswa[] // Relasi ke Mahasiswa
+  kelurahanList  Kelurahan[]
+  kota           Kota        @relation(fields: [kota_id], references: [id])
+  kota_id        Int
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt()
+  deleted_at     DateTime? // soft delete
+
+  @@map("kecamatan")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Kota {
+  id            Int         @id @default(autoincrement())
+  kode_kota     String      @unique
+  nama          String      @unique // Nama unik untuk menghindari duplikasi
+  mahasiswaList Mahasiswa[] // Relasi ke Mahasiswa
+  kecamatanList Kecamatan[] // Relasi ke Kecamatan
+  provinsi      Provinsi    @relation(fields: [provinsi_id], references: [id])
+  provinsi_id   Int
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt()
+  deleted_at    DateTime? // soft delete
+
+  @@map("kota")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Provinsi {
+  id              Int           @id @default(autoincrement())
+  kode_provinsi   String        @unique
+  nama            String        @unique
+  status          Boolean?
+  kotaList        Kota[]
+  mahasiswaList   Mahasiswa[] // Relasi ke Mahasiswa
+  negara          Negara        @relation(fields: [negara_id], references: [id])
+  sekolahList     Sekolah[]
+  universitasList Universitas[]
+  negara_id       Int
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  deleted_at      DateTime? // soft delete
+
+  @@map("provinsi")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
+
+model Negara {
+  id            Int         @id @default(autoincrement())
+  kode_negara   String?
+  nama          String
+  kode_telp     String?
+  region        String?
+  subregion     String?
+  status        Boolean?
+  provinsiList  Provinsi[]
+  mahasiswaList Mahasiswa[]
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  deleted_at    DateTime? // soft delete
+
+  @@map("negara")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+  @@deny('delete', true)
+}
