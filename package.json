@@ -22,12 +22,13 @@
     "seed:roles": "ts-node seeds/roles.ts",
     "seed:permissions": "ts-node seeds/permissions.ts",
     "seed:units": "ts-node seeds/units.ts",
-    "seed:app": "ts-node seeds/agama.ts",
+    "seed:agama": "ts-node seeds/agama.ts",
     "seed:negara": "ts-node seeds/negara.ts",
     "seed:provinsi": "ts-node seeds/provinsi.ts",
     "seed:kota": "ts-node seeds/kota.ts",
     "seed:kecamatan": "ts-node seeds/kecamatan.ts",
-    "seed:kelurahan": "ts-node seeds/kelurahan.ts"
+    "seed:kelurahan": "ts-node seeds/kelurahan.ts",
+    "seed:kelurahan:batch": "ts-node seeds/kelurahan.ts --limit 100 --startFrom 0"
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
