@@ -1,0 +1,5 @@
+query GetListPendaftarant($statusPenerimaan: Int) {
+  getListPendaftaran(status_penerimaan: $statusPenerimaan) {
+    total
+  }
+}

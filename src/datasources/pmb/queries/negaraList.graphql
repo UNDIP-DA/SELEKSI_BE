@@ -1,0 +1,11 @@
+query NegaraGetList($take: Int) {
+  negaraGetList(take: $take) {
+    data {
+      id
+      nama
+      country_code
+      status
+      tel_code
+    }
+  }
+}

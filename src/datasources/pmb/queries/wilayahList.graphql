@@ -1,0 +1,12 @@
+query WilayahGetByLevel($take: Int, $level: Int) {
+  wilayahGetByLevel(take: $take, level: $level) {
+    data {
+      id
+      ref_negara_id
+      parent_kode
+      level
+      kode
+      nama
+    }
+  }
+}

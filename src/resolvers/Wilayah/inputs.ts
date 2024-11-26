@@ -10,11 +10,11 @@ export const WilayahCreateInput = inputObjectType({
         t.nonNull.string('nama', {
             description: 'Nama wilayah (wajib diisi)'
         })
-        t.nonNull.string('level', {
-            description: 'Tingkat wilayah: PROVINSI/KOTA/KECAMATAN/KELURAHAN (wajib diisi)'
+        t.nonNull.string('tingkat', {
+            description: 'Tingkat wilayah: PROVINSI/KOTAKAB/KECAMATAN (wajib diisi)'
         })
-        t.nonNull.int('negara_id', {
-            description: 'ID negara dari wilayah (wajib diisi)'
+        t.int('negara_id', {
+            description: 'ID negara dari wilayah (opsional)'
         })
         t.int('parent_id', {
             description: 'ID wilayah induk (opsional)'
@@ -32,7 +32,7 @@ export const WilayahUpdateInput = inputObjectType({
         t.string('nama', {
             description: 'Nama wilayah yang diperbarui'
         })
-        t.string('level', {
+        t.string('tingkat', {
             description: 'Tingkat wilayah yang diperbarui'
         })
         t.int('parent_id', {
@@ -65,7 +65,7 @@ export const WilayahWhereInput = inputObjectType({
         })
 
         // Filter tambahan
-        t.string('level', {
+        t.string('tingkat', {
             description: 'Filter berdasarkan tingkat wilayah'
         })
         t.int('negara_id', {

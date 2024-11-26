@@ -1,0 +1,79 @@
+query GetListPendaftarant($take: Int, $statusPenerimaan: Int) {
+  getListPendaftaran(take: $take, status_penerimaan: $statusPenerimaan) {
+    data {
+      id
+      uuid
+      nomor
+      User {
+        id
+        uuid
+        DataDiri {
+          id
+          nama
+          tempat_lahir
+          tanggal_lahir
+          jenis_kelamin
+          golongan_darah
+          Agama {
+            id
+            agama
+          }
+          no_ktp
+          Negara {
+            id
+            nama
+          }
+          Wilayah {
+            id
+            nama
+          }
+          nama_desa
+          nama_dusun
+          alamat
+          rt
+          rw
+          kode_pos
+          foto_url
+        }
+        email
+        telepon
+        DataPendidikan {
+          Jenjang {
+            id
+            nama
+          }
+          Sekolah {
+            nama_sekolah
+            id
+          }
+          Universitas {
+            id
+            nama
+          }
+        }
+      }
+      ProdiTerpilih {
+        ProgramStudi {
+          id
+          nama
+        }
+      }
+      PembukaanJalur {
+        id
+        uuid
+        nama_custom
+        Jalur {
+          id
+          nama_jalur
+          kode_jalur
+        }
+      }
+      status_penerimaan
+      StatusPenerimaan {
+        id
+        nama
+      }
+    }
+    total
+  }
+}

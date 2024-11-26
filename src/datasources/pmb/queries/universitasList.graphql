@@ -1,0 +1,14 @@
+query UniversitasGetList($take: Int) {
+  universitasGetList(take: $take) {
+    data {
+      id
+      id_pt
+      kode_pt
+      nama
+      Wilayah {
+        id
+      }
+      status
+    }
+  }
+}

@@ -8,7 +8,7 @@ export const WilayahObject = objectType({
         t.field(Wilayah.id)
         t.field(Wilayah.kode_wilayah)
         t.field(Wilayah.parent_id)
-        t.field(Wilayah.level)
+        t.field(Wilayah.tingkat)
         t.field(Wilayah.nama)
         t.field(Wilayah.status)
 

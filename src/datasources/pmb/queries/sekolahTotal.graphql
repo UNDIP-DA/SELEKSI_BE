@@ -1,0 +1,5 @@
+query SekolahGetList {
+  sekolahGetList {
+    total
+  }
+}

@@ -1,0 +1,17 @@
+query SekolahGetList($take: Int) {
+  sekolahGetList(take: $take) {
+    data {
+      id
+      kode_sekolah
+      nama_sekolah
+      alamat
+      kelurahan
+      Wilayah {
+        id
+      }
+      akreditasi
+      status
+      tipe
+    }
+  }
+}

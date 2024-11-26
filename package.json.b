@@ -15,13 +15,15 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon dist/server.js",
     "generate": "npx zenstack generate && npx prisma db push",
-    "generate:fresh": "npx zenstack generate && npx prisma migrate reset && npx prisma db push",
+    "migrate:fresh": "npx prisma migrate reset",
     "seed": "ts-node seeds/app.ts && ts-node seeds/roles.ts && ts-node seeds/permissions.ts",
     "seed:roles": "ts-node seeds/roles.ts",
     "seed:permissions": "ts-node seeds/permissions.ts",
-    "seed:units": "ts-node seeds/units.ts"
+    "seed:units": "ts-node seeds/units.ts",
+    "seed:agama": "ts-node seeds/agama.ts",
+    "seed:negara": "ts-node seeds/negara.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
@@ -33,7 +35,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "graphql": "^16.9.0",
-    "graphql-request": "^6.1.0",
     "graphql-scalars": "^1.23.0",
     "jsonwebtoken": "^9.0.2",
     "nexus": "^1.3.0",

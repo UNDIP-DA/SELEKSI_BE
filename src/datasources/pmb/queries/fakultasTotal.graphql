@@ -1,0 +1,5 @@
+query FakultasGetList {
+  fakultasGetList {
+    total
+  }
+}

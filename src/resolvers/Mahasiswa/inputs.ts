@@ -17,9 +17,9 @@ export const MahasiswaCreateInput = inputObjectType({
         t.nonNull.int('penerimaan_id', {
             description: 'ID penerimaan mahasiswa'
         })
-        t.nonNull.int('jalur_id', {
-            description: 'ID jalur penerimaan mahasiswa'
-        })
+        // t.nonNull.int('jalur_id', {
+        //     description: 'ID jalur penerimaan mahasiswa'
+        // })
 
         // Data Pribadi Opsional
         t.string('uuid', {
@@ -144,9 +144,9 @@ export const MahasiswaUpdateInput = inputObjectType({
         t.int('penerimaan_id', {
             description: 'ID penerimaan mahasiswa'
         })
-        t.int('jalur_id', {
-            description: 'ID jalur penerimaan mahasiswa'
-        })
+        // t.int('jalur_id', {
+        //     description: 'ID jalur penerimaan mahasiswa'
+        // })
 
         // Data Pribadi Opsional
         t.string('uuid', {
@@ -282,9 +282,9 @@ export const MahasiswaWhereInput = inputObjectType({
         t.int('penerimaan_id', {
             description: 'Filter by penerimaan'
         })
-        t.int('jalur_id', {
-            description: 'Filter by jalur'
-        })
+        // t.int('jalur_id', {
+        //     description: 'Filter by jalur'
+        // })
         t.boolean('status_kip', {
             description: 'Filter by status KIP'
         })

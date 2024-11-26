@@ -24,7 +24,8 @@ export const mahasiswaGetList = queryField('mahasiswaGetList', {
         where: MahasiswaWhereInput,
     },
     resolve: async (_, { where }, { prisma }) => {
-        const { search, programStudi_id, penerimaan_id, jalur_id, status_kip, sortBy, descending, take = 10, skip = 0 } = where || {};
+        // const { search, programStudi_id, penerimaan_id, jalur_id, status_kip, sortBy, descending, take = 10, skip = 0 } = where || {};
+        const { search, programStudi_id, penerimaan_id, status_kip, sortBy, descending, take = 10, skip = 0 } = where || {};
 
         const whereClause = {
             AND: [
@@ -36,7 +37,7 @@ export const mahasiswaGetList = queryField('mahasiswaGetList', {
                 } : {},
                 programStudi_id ? { programStudi_id } : {},
                 penerimaan_id ? { penerimaan_id } : {},
-                jalur_id ? { jalur_id } : {},
+                // jalur_id ? { jalur_id } : {},
                 status_kip ? { status_kip } : {},
             ],
         };

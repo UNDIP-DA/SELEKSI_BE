@@ -1,0 +1,8 @@
+query AgamaGetList($take: Int) {
+  agamaGetList(take: $take) {
+    data {
+      id
+      agama
+    }
+  }
+}

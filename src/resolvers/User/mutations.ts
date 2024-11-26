@@ -109,7 +109,7 @@ export const login = mutationField('login', {
         permissions: permissions.map(permission => permission.name) || [],
       }
 
-      return generateToken(payload);
+      return generateToken(payload, process.env.TOKEN_HOURS || '1h');
     } catch (error) {
       throw new Error('Failed to login: ' + error);
     }
@@ -315,7 +315,7 @@ export const userSelectRole = mutationField('userSelectRole', {
         selectedUnit: null,
       }
 
-      return generateToken(payload);
+      return generateToken(payload, process.env.TOKEN_HOURS || '1h');
     } catch (error) {
       throw new Error('Failed to select role: ' + error);
     }
@@ -343,7 +343,7 @@ export const userSelectUnit = mutationField('userSelectUnit', {
         selectedUnit: roleUnit.unit,
       }
 
-      return generateToken(payload);
+      return generateToken(payload, process.env.TOKEN_HOURS || '1h');
     } catch (error) {
       throw new Error('Failed to select role: ' + error);
     }
@@ -533,7 +533,7 @@ export const loginsso = mutationField('loginsso', {
       selectedUnit: null,
     }
 
-    return generateToken(payload);
+    return generateToken(payload, process.env.TOKEN_HOURS || '1h');
 
   }
 });

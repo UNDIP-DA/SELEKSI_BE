@@ -1,0 +1,8 @@
+query FakultasGetList($take: Int) {
+  fakultasGetList(take: $take) {
+    data {
+      id
+      nama
+    }
+  }
+}

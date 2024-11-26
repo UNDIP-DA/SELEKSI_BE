@@ -89,10 +89,10 @@ model RoleUnit {
 
 model Mahasiswa {
   id                      Int          @id @default(autoincrement())
-  uuid                    String?      @unique
+  uuid                    String       @unique
   nomor_peserta           String?
   nama                    String
-  status_kip              Boolean?
+  status_kip              Boolean? // SKIP
   tempat_lahir            String?
   tanggal_lahir           DateTime?
   jenis_kelamin           String
@@ -112,25 +112,24 @@ model Mahasiswa {
   kode_pos                String?
   email                   String?
   no_hp                   String?
-  nim_sebelumnya          String?
+  nim_sebelumnya          String? // SKIP
   programStudi            ProgramStudi @relation(fields: [programStudi_id], references: [id])
   programStudi_id         Int
   ipk                     Float?
-  ukt                     Float?
-  spp                     Float?
-  matrikulasi             Boolean?
-  kelas                   String?
+  ukt                     Float? // SKIP
+  uktGol                  Int? // SKIP
+  spp                     Float? // SKIP
+  matrikulasi             Boolean? // SKIP
+  kelas                   String? // SKIP
   riwayat_pendidikan_sma  String?
   riwayat_pendidikan_univ String?
-  data_ayah               String?
-  data_ibu                String?
-  data_wali               String?
+  data_ayah               String? // SKIP
+  data_ibu                String? // SKIP
+  data_wali               String? // SKIP
   foto                    String?
   ijazah                  String?
-  penerimaan              Penerimaan   @relation(fields: [penerimaan_id], references: [id])
-  penerimaan_id           Int
-  jalur                   Jalur        @relation(fields: [jalur_id], references: [id])
-  jalur_id                Int
+  penerimaan              Penerimaan?  @relation(fields: [penerimaan_id], references: [id])
+  penerimaan_id           Int?
   created_at              DateTime     @default(now())
   updated_at              DateTime     @updatedAt()
 
@@ -140,7 +139,8 @@ model Mahasiswa {
 }
 
 model ProgramStudi {
-  id            Int         @id @default(autoincrement())
+  id            Int         @id
+  uuid          String      @unique
   nama          String
   fakultas_id   Int
   strata_id     Int
@@ -157,7 +157,7 @@ model ProgramStudi {
 }
 
 model Fakultas {
-  id               Int            @id @default(autoincrement())
+  id               Int            @id
   nama             String
   programStudiList ProgramStudi[]
   created_at       DateTime       @default(now())
@@ -169,8 +169,9 @@ model Fakultas {
 }
 
 model Strata {
-  id               Int            @id @default(autoincrement())
+  id               Int            @id
   nama             String
+  keterangan       String?
   programStudiList ProgramStudi[]
   created_at       DateTime       @default(now())
   updated_at       DateTime       @updatedAt
@@ -204,7 +205,6 @@ model Jalur {
   nama_jalur          String
   keterangan          String?
   status              Boolean?
-  mahasiswaList       Mahasiswa[]
   penerimaanJalurList PenerimaanJalur[]
   created_at          DateTime          @default(now())
   updated_at          DateTime          @updatedAt
@@ -216,10 +216,10 @@ model Jalur {
 
 model PenerimaanJalur {
   id            Int        @id @default(autoincrement())
-  penerimaan_id Int
-  jalur_id      Int
   penerimaan    Penerimaan @relation(fields: [penerimaan_id], references: [id])
+  penerimaan_id Int
   jalur         Jalur      @relation(fields: [jalur_id], references: [id])
+  jalur_id      Int
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 
@@ -229,7 +229,7 @@ model PenerimaanJalur {
 }
 
 model Sekolah {
-  id           Int       @id @default(autoincrement())
+  id           Int       @id
   kode_sekolah String    @unique
   nama_sekolah String
   alamat       String?
@@ -250,7 +250,8 @@ model Sekolah {
 }
 
 model Universitas {
-  id         Int       @id @default(autoincrement())
+  id         Int       @id
+  uuid       String    @unique
   kode_pt    String    @unique
   nama       String
   wilayah    Wilayah?  @relation(fields: [wilayah_id], references: [id])
@@ -267,7 +268,7 @@ model Universitas {
 }
 
 model Agama {
-  id            Int         @id @default(autoincrement())
+  id            Int         @id
   nama          String      @unique // Nama unik untuk menghindari duplikasi
   mahasiswaList Mahasiswa[] // Relasi ke Mahasiswa
   created_at    DateTime    @default(now())
@@ -275,37 +276,37 @@ model Agama {
   deleted_at    DateTime? // soft delete
 
   @@map("agama")
-  @@allow('all', false)
+  @@allow('all', auth().roles?[name == 'system'])
   @@allow('read', true)
   @@deny('delete', true)
 }
 
 model Wilayah {
-  id              Int           @id @default(autoincrement())
+  id              Int           @id
   kode_wilayah    String        @unique
   parent          Wilayah?      @relation("WilayahToParent", fields: [parent_id], references: [id])
   parent_id       Int?
   children        Wilayah[]     @relation("WilayahToParent")
-  level           String
-  nama            String        @unique
+  tingkat         String
+  nama            String
   status          Boolean?
   mahasiswaList   Mahasiswa[] // Relasi ke Mahasiswa
   sekolahList     Sekolah[]
   universitasList Universitas[]
-  negara          Negara        @relation(fields: [negara_id], references: [id])
-  negara_id       Int
+  negara          Negara?       @relation(fields: [negara_id], references: [id])
+  negara_id       Int?
   created_at      DateTime      @default(now())
   updated_at      DateTime      @updatedAt
   deleted_at      DateTime? // soft delete
 
-  @@map("provinsi")
+  @@map("wilayah")
   @@allow('all', auth().roles?[name == 'system'])
   @@allow('read', true)
   @@deny('delete', true)
 }
 
 model Negara {
-  id            Int         @id @default(autoincrement())
+  id            Int         @id
   kode_negara   String?
   nama          String
   kode_telp     String?

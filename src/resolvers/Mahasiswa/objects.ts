@@ -67,8 +67,8 @@ export const MahasiswaObject = objectType({
         // Relasi Penerimaan dan Jalur
         t.field(Mahasiswa.penerimaan)
         t.field(Mahasiswa.penerimaan_id)
-        t.field(Mahasiswa.jalur)
-        t.field(Mahasiswa.jalur_id)
+        // t.field(Mahasiswa.jalur)
+        // t.field(Mahasiswa.jalur_id)
 
         // Timestamp
         t.field(Mahasiswa.created_at)

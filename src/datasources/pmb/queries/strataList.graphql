@@ -1,0 +1,9 @@
+query StrataGetList($take: Int) {
+  strataGetList(take: $take) {
+    data {
+      id
+      strata
+      keterangan
+    }
+  }
+}

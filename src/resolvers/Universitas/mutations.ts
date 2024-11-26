@@ -1,6 +1,7 @@
 import { intArg, mutationField, nonNull } from 'nexus';
 import { Universitas } from 'nexus-prisma';
 import { UniversitasCreateInput, UniversitasUpdateInput } from './inputs';
+import { Universitas as UniversitasModelFromPmb, fetch as qfetchFromPmb } from '../../datasources/pmb/query';
 
 export const universitasCreate = mutationField('universitasCreate', {
     type: Universitas.$name,
@@ -56,4 +57,41 @@ export const universitasDelete = mutationField('universitasDelete', {
             throw new Error('Gagal menghapus data universitas: ' + error);
         }
     },
-}); 
+});
+
+export const universitasSyncFromPmb = mutationField('universitasSyncFromPmb', {
+    type: 'Int',
+    description: 'Mengsinkronkan data universitas dari pmb',
+    resolve: async (_, { id }, { prisma }) => {
+        try {
+            // 
+            const response1 = await qfetchFromPmb<{ universitasGetList: { total: number } }>({ gqlQuery: 'universitasTotal' });
+            const universitasTotal = response1.universitasGetList.total;
+            const response2 = await qfetchFromPmb<{ universitasGetList: { data: UniversitasModelFromPmb[] } }>({ gqlQuery: 'universitasList', params: { take: universitasTotal } });
+            const universitasList = response2.universitasGetList.data;
+            for (const universitas of universitasList) {
+                await prisma.universitas.upsert({
+                    where: { id: universitas.id }, // Menggunakan ID dari API sebagai unique identifier
+                    update: {
+                        uuid: universitas.id_pt,
+                        kode_pt: universitas.kode_pt,
+                        nama: universitas.nama,
+                        wilayah_id: universitas.Wilayah?.id ?? null,
+                        status: universitas.status === 1,
+                    },
+                    create: {
+                        id: universitas.id, // Harus sama dengan data dari API
+                        uuid: universitas.id_pt,
+                        kode_pt: universitas.kode_pt,
+                        nama: universitas.nama,
+                        wilayah_id: universitas.Wilayah?.id ?? null,
+                        status: universitas.status === 1,
+                    },
+                });
+            }
+            return prisma.universitas.count();
+        } catch (error) {
+            throw new Error('Gagal sync data universitas dari pmb: ' + error);
+        }
+    },
+});

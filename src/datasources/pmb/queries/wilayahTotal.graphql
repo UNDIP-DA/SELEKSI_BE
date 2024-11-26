@@ -1,0 +1,5 @@
+query WilayahGetByLevel($level: Int) {
+  wilayahGetByLevel(level: $level) {
+    total
+  }
+}

@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
     "module": "CommonJS",
+    "target": "ES2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true,
     "paths": {
       "express": ["./node_modules/@types/express"]
     }

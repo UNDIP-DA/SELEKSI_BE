@@ -39,7 +39,7 @@ export const wilayahGetList = queryField('wilayahGetList', {
         where: WilayahWhereInput,
     },
     resolve: async (_, { where }, { prisma }) => {
-        const { search, sortBy, descending, take = 10, skip = 0, level, negara_id, parent_id, status } = where || {}
+        const { search, sortBy, descending, take = 10, skip = 0, tingkat, negara_id, parent_id, status } = where || {}
 
         const whereClause = {
             AND: [
@@ -49,7 +49,7 @@ export const wilayahGetList = queryField('wilayahGetList', {
                         { nama: { contains: search } },
                     ],
                 } : {},
-                level ? { level } : {},
+                tingkat ? { tingkat } : {},
                 negara_id ? { negara_id } : {},
                 parent_id ? { parent_id } : {},
             ],

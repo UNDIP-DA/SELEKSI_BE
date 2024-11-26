@@ -1,0 +1,12 @@
+query ProgramStudiGetList($take: Int) {
+  programStudiGetList(take: $take) {
+    data {
+      id
+      uuid
+      nama
+      status
+      strata_id
+      fakultas_id
+    }
+  }
+}
