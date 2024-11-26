@@ -10,9 +10,8 @@ export const SekolahObject = objectType({
         t.field(Sekolah.nama_sekolah);
         t.field(Sekolah.alamat);
         t.field(Sekolah.kelurahan);
-        t.field(Sekolah.provinsi);
-        t.field(Sekolah.provinsi_id);
-        t.field(Sekolah.akreditasi);
+        t.field(Sekolah.wilayah);
+        t.field(Sekolah.wilayah_id);
         t.field(Sekolah.status);
         t.field(Sekolah.tipe);
         t.field(Sekolah.created_at);

@@ -10,7 +10,7 @@ export const NegaraObject = objectType({
         t.field(Negara.nama);
         t.field(Negara.kode_telp);
         t.field(Negara.status);
-        t.field(Negara.provinsiList);
+        t.field(Negara.wilayahList);
         t.field(Negara.mahasiswaList);
         t.field(Negara.created_at);
         t.field(Negara.updated_at);

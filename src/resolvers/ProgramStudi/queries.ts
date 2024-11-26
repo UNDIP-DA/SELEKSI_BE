@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { ProgramStudi } from 'nexus-prisma';
 import { ProgramStudiWhereInput } from './inputs';
 
-export const getProgramStudi = queryField('getProgramStudi', {
+export const programStudiGet = queryField('programStudiGet', {
     type: ProgramStudi.$name,
     description: 'Mengambil satu data program studi berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getProgramStudi = queryField('getProgramStudi', {
     },
 });
 
-export const getProgramStudiList = queryField('getProgramStudiList', {
+export const programStudiGetList = queryField('programStudiGetList', {
     type: 'ProgramStudiList',
     description: 'Mengambil daftar program studi dengan paginasi dan filter opsional',
     args: {

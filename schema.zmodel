@@ -102,14 +102,10 @@ model Mahasiswa {
   nik                     String?
   negara                  Negara?      @relation(fields: [negara_id], references: [id])
   negara_id               Int?
-  provinsi                Provinsi?    @relation(fields: [provinsi_id], references: [id])
-  provinsi_id             Int?
-  kota                    Kota?        @relation(fields: [kota_id], references: [id])
-  kota_id                 Int?
-  kecamatan               Kecamatan?   @relation(fields: [kecamatan_id], references: [id])
-  kecamatan_id            Int?
-  kelurahan               Kelurahan?   @relation(fields: [kelurahan_id], references: [id])
-  kelurahan_id            Int?
+  wilayah                 Wilayah?     @relation(fields: [wilayah_id], references: [id])
+  wilayah_id              Int?
+  nama_desa               String?
+  nama_dusun              String?
   alamat                  String?
   rt                      String?
   rw                      String?
@@ -238,8 +234,8 @@ model Sekolah {
   nama_sekolah String
   alamat       String?
   kelurahan    String?
-  provinsi     Provinsi? @relation(fields: [provinsi_id], references: [id])
-  provinsi_id  Int?
+  wilayah      Wilayah?  @relation(fields: [wilayah_id], references: [id])
+  wilayah_id   Int?
   akreditasi   String?
   status       Boolean?
   tipe         String?
@@ -254,15 +250,15 @@ model Sekolah {
 }
 
 model Universitas {
-  id          Int       @id @default(autoincrement())
-  kode_pt     String    @unique
-  nama        String
-  provinsi    Provinsi? @relation(fields: [provinsi_id], references: [id])
-  provinsi_id Int?
-  status      Boolean?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  deleted_at  DateTime? // soft delete
+  id         Int       @id @default(autoincrement())
+  kode_pt    String    @unique
+  nama       String
+  wilayah    Wilayah?  @relation(fields: [wilayah_id], references: [id])
+  wilayah_id Int?
+  status     Boolean?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime? // soft delete
 
   @@map("universitas")
   @@allow('all', auth().roles?[name == 'system'])
@@ -284,69 +280,19 @@ model Agama {
   @@deny('delete', true)
 }
 
-model Kelurahan {
-  id             Int         @id @default(autoincrement())
-  kode_kelurahan String      @unique
-  nama           String
-  mahasiswaList  Mahasiswa[] // Relasi ke Mahasiswa
-  kecamatan      Kecamatan   @relation(fields: [kecamatan_id], references: [id])
-  kecamatan_id   Int
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @updatedAt()
-  deleted_at     DateTime? // soft delete
-
-  @@map("kelurahan")
-  @@allow('all', auth().roles?[name == 'system'])
-  @@allow('read', true)
-  @@deny('delete', true)
-}
-
-model Kecamatan {
-  id             Int         @id @default(autoincrement())
-  kode_kecamatan String      @unique
-  nama           String
-  mahasiswaList  Mahasiswa[] // Relasi ke Mahasiswa
-  kelurahanList  Kelurahan[]
-  kota           Kota        @relation(fields: [kota_id], references: [id])
-  kota_id        Int
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @updatedAt()
-  deleted_at     DateTime? // soft delete
-
-  @@map("kecamatan")
-  @@allow('all', auth().roles?[name == 'system'])
-  @@allow('read', true)
-  @@deny('delete', true)
-}
-
-model Kota {
-  id            Int         @id @default(autoincrement())
-  kode_kota     String      @unique
-  nama          String      @unique // Nama unik untuk menghindari duplikasi
-  mahasiswaList Mahasiswa[] // Relasi ke Mahasiswa
-  kecamatanList Kecamatan[] // Relasi ke Kecamatan
-  provinsi      Provinsi    @relation(fields: [provinsi_id], references: [id])
-  provinsi_id   Int
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt()
-  deleted_at    DateTime? // soft delete
-
-  @@map("kota")
-  @@allow('all', auth().roles?[name == 'system'])
-  @@allow('read', true)
-  @@deny('delete', true)
-}
-
-model Provinsi {
+model Wilayah {
   id              Int           @id @default(autoincrement())
-  kode_provinsi   String        @unique
+  kode_wilayah    String        @unique
+  parent          Wilayah?      @relation("WilayahToParent", fields: [parent_id], references: [id])
+  parent_id       Int?
+  children        Wilayah[]     @relation("WilayahToParent")
+  level           String
   nama            String        @unique
   status          Boolean?
-  kotaList        Kota[]
   mahasiswaList   Mahasiswa[] // Relasi ke Mahasiswa
-  negara          Negara        @relation(fields: [negara_id], references: [id])
   sekolahList     Sekolah[]
   universitasList Universitas[]
+  negara          Negara        @relation(fields: [negara_id], references: [id])
   negara_id       Int
   created_at      DateTime      @default(now())
   updated_at      DateTime      @updatedAt
@@ -366,7 +312,7 @@ model Negara {
   region        String?
   subregion     String?
   status        Boolean?
-  provinsiList  Provinsi[]
+  wilayahList   Wilayah[]
   mahasiswaList Mahasiswa[]
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt

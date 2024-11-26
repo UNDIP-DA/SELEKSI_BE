@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Strata } from 'nexus-prisma';
 import { StrataWhereInput } from './inputs';
 
-export const getStrata = queryField('getStrata', {
+export const strataGet = queryField('strataGet', {
     type: Strata.$name,
     description: 'Mengambil satu data strata berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getStrata = queryField('getStrata', {
     },
 });
 
-export const getStrataList = queryField('getStrataList', {
+export const strataGetList = queryField('strataGetList', {
     type: 'StrataList',
     description: 'Mengambil daftar strata dengan paginasi dan filter opsional',
     args: {

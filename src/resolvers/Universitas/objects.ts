@@ -8,8 +8,8 @@ export const UniversitasObject = objectType({
         t.field(Universitas.id);
         t.field(Universitas.kode_pt);
         t.field(Universitas.nama);
-        t.field(Universitas.provinsi);
-        t.field(Universitas.provinsi_id);
+        t.field(Universitas.wilayah);
+        t.field(Universitas.wilayah_id);
         t.field(Universitas.status);
         t.field(Universitas.created_at);
         t.field(Universitas.updated_at);

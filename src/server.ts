@@ -22,7 +22,6 @@ const apollo = new ApolloServer({
 
 const startServer = async (app: express.Application, apollo: ApolloServer) => {
   await apollo.start();
-  // apollo.applyMiddleware({ app });
 
   app.use(
     '/graphql',

@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Negara } from 'nexus-prisma';
 import { NegaraWhereInput } from './inputs';
 
-export const getNegara = queryField('getNegara', {
+export const negaraGet = queryField('negaraGet', {
     type: Negara.$name,
     description: 'Mengambil satu data negara berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getNegara = queryField('getNegara', {
     },
 });
 
-export const getNegaraList = queryField('getNegaraList', {
+export const negaraGetList = queryField('negaraGetList', {
     type: 'NegaraList',
     description: 'Mengambil daftar negara dengan paginasi dan filter opsional',
     args: {

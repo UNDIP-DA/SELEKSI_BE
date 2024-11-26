@@ -18,3 +18,11 @@ langkah install
 16. jalankan (khusus untuk production) : npm run seed:kelurahan
 17. jalankan : npm run dev
 18. buka : http://localhost:4000/graphql
+
+Todolist
+
+1. Add approval pada penerimaan
+2. Add gol ukt pada tabel mahasiswa
+3. Add kode prodi regonline
+4. Export import excel
+5. Mengganti redaksi endpoint dengan prefix model

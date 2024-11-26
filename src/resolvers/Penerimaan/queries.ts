@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Penerimaan } from 'nexus-prisma';
 import { PenerimaanWhereInput } from './inputs';
 
-export const getPenerimaan = queryField('getPenerimaan', {
+export const penerimaanGet = queryField('penerimaanGet', {
     type: Penerimaan.$name,
     description: 'Mengambil satu data penerimaan berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getPenerimaan = queryField('getPenerimaan', {
     },
 });
 
-export const getPenerimaanList = queryField('getPenerimaanList', {
+export const penerimaanGetList = queryField('penerimaanGetList', {
     type: 'PenerimaanList',
     description: 'Mengambil daftar penerimaan dengan paginasi dan filter opsional',
     args: {

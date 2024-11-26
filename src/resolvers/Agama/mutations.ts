@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull } from 'nexus';
 import { Agama } from 'nexus-prisma';
 import { AgamaCreateInput, AgamaUpdateInput } from './inputs';
 
-export const createAgama = mutationField('createAgama', {
+export const agamaCreate = mutationField('agamaCreate', {
     type: Agama.$name,
     description: 'Membuat data agama baru',
     args: {
@@ -19,7 +19,7 @@ export const createAgama = mutationField('createAgama', {
     },
 });
 
-export const updateAgama = mutationField('updateAgama', {
+export const agamaUpdate = mutationField('agamaUpdate', {
     type: Agama.$name,
     description: 'Memperbarui data agama yang sudah ada',
     args: {
@@ -38,7 +38,7 @@ export const updateAgama = mutationField('updateAgama', {
     },
 });
 
-export const deleteAgama = mutationField('deleteAgama', {
+export const agamaDelete = mutationField('agamaDelete', {
     type: Agama.$name,
     description: 'Menghapus data agama (soft delete)',
     args: {

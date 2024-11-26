@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Agama } from 'nexus-prisma';
 import { AgamaWhereInput } from './inputs';
 
-export const getAgama = queryField('getAgama', {
+export const agamaGet = queryField('agamaGet', {
     type: Agama.$name,
     description: 'Mengambil satu data agama berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getAgama = queryField('getAgama', {
     },
 });
 
-export const getAgamaList = queryField('getAgamaList', {
+export const agamaGetList = queryField('agamaGetList', {
     type: 'AgamaList',
     description: 'Mengambil daftar agama dengan paginasi dan filter opsional',
     args: {

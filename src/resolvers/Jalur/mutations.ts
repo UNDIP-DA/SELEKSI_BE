@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull } from 'nexus';
 import { Jalur } from 'nexus-prisma';
 import { JalurCreateInput, JalurUpdateInput } from './inputs';
 
-export const createJalur = mutationField('createJalur', {
+export const jalurCreate = mutationField('jalurCreate', {
     type: Jalur.$name,
     description: 'Membuat data jalur baru',
     args: {
@@ -19,7 +19,7 @@ export const createJalur = mutationField('createJalur', {
     },
 });
 
-export const updateJalur = mutationField('updateJalur', {
+export const jalurUpdate = mutationField('jalurUpdate', {
     type: Jalur.$name,
     description: 'Memperbarui data jalur yang sudah ada',
     args: {
@@ -38,7 +38,7 @@ export const updateJalur = mutationField('updateJalur', {
     },
 });
 
-export const deleteJalur = mutationField('deleteJalur', {
+export const jalurDelete = mutationField('jalurDelete', {
     type: Jalur.$name,
     description: 'Menghapus data jalur',
     args: {

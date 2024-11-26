@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull } from 'nexus';
 import { ProgramStudi } from 'nexus-prisma';
 import { ProgramStudiCreateInput, ProgramStudiUpdateInput } from './inputs';
 
-export const createProgramStudi = mutationField('createProgramStudi', {
+export const programStudiCreate = mutationField('programStudiCreate', {
     type: ProgramStudi.$name,
     description: 'Membuat data program studi baru',
     args: {
@@ -19,7 +19,7 @@ export const createProgramStudi = mutationField('createProgramStudi', {
     },
 });
 
-export const updateProgramStudi = mutationField('updateProgramStudi', {
+export const programStudiUpdate = mutationField('programStudiUpdate', {
     type: ProgramStudi.$name,
     description: 'Memperbarui data program studi yang sudah ada',
     args: {
@@ -38,7 +38,7 @@ export const updateProgramStudi = mutationField('updateProgramStudi', {
     },
 });
 
-export const deleteProgramStudi = mutationField('deleteProgramStudi', {
+export const programStudiDelete = mutationField('programStudiDelete', {
     type: ProgramStudi.$name,
     description: 'Menghapus data program studi',
     args: {

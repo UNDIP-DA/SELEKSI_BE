@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull } from 'nexus';
 import { Strata } from 'nexus-prisma';
 import { StrataCreateInput, StrataUpdateInput } from './inputs';
 
-export const createStrata = mutationField('createStrata', {
+export const strataCreate = mutationField('strataCreate', {
     type: Strata.$name,
     description: 'Membuat data strata baru',
     args: {
@@ -19,7 +19,7 @@ export const createStrata = mutationField('createStrata', {
     },
 });
 
-export const updateStrata = mutationField('updateStrata', {
+export const strataUpdate = mutationField('strataUpdate', {
     type: Strata.$name,
     description: 'Memperbarui data strata yang sudah ada',
     args: {
@@ -38,7 +38,7 @@ export const updateStrata = mutationField('updateStrata', {
     },
 });
 
-export const deleteStrata = mutationField('deleteStrata', {
+export const strataDelete = mutationField('strataDelete', {
     type: Strata.$name,
     description: 'Menghapus data strata',
     args: {

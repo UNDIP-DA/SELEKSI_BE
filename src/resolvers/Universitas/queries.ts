@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Universitas } from 'nexus-prisma';
 import { UniversitasWhereInput } from './inputs';
 
-export const getUniversitas = queryField('getUniversitas', {
+export const universitasGet = queryField('universitasGet', {
     type: Universitas.$name,
     description: 'Mengambil satu data universitas berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getUniversitas = queryField('getUniversitas', {
     },
 });
 
-export const getUniversitasList = queryField('getUniversitasList', {
+export const universitasGetList = queryField('universitasGetList', {
     type: 'UniversitasList',
     description: 'Mengambil daftar universitas dengan paginasi dan filter opsional',
     args: {

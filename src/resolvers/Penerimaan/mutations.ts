@@ -2,7 +2,7 @@ import { intArg, mutationField, nonNull } from 'nexus';
 import { Penerimaan } from 'nexus-prisma';
 import { PenerimaanCreateInput, PenerimaanUpdateInput } from './inputs';
 
-export const createPenerimaan = mutationField('createPenerimaan', {
+export const penerimaanCreate = mutationField('penerimaanCreate', {
     type: Penerimaan.$name,
     description: 'Membuat data penerimaan baru',
     args: {
@@ -19,7 +19,7 @@ export const createPenerimaan = mutationField('createPenerimaan', {
     },
 });
 
-export const updatePenerimaan = mutationField('updatePenerimaan', {
+export const penerimaanUpdate = mutationField('penerimaanUpdate', {
     type: Penerimaan.$name,
     description: 'Memperbarui data penerimaan yang sudah ada',
     args: {
@@ -38,7 +38,7 @@ export const updatePenerimaan = mutationField('updatePenerimaan', {
     },
 });
 
-export const deletePenerimaan = mutationField('deletePenerimaan', {
+export const penerimaanDelete = mutationField('penerimaanDelete', {
     type: Penerimaan.$name,
     description: 'Menghapus data penerimaan',
     args: {

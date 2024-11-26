@@ -2,7 +2,7 @@ import { queryField, nonNull, intArg } from 'nexus';
 import { Jalur } from 'nexus-prisma';
 import { JalurWhereInput } from './inputs';
 
-export const getJalur = queryField('getJalur', {
+export const jalurGet = queryField('jalurGet', {
     type: Jalur.$name,
     description: 'Mengambil satu data jalur berdasarkan ID',
     args: {
@@ -17,7 +17,7 @@ export const getJalur = queryField('getJalur', {
     },
 });
 
-export const getJalurList = queryField('getJalurList', {
+export const jalurGetList = queryField('jalurGetList', {
     type: 'JalurList',
     description: 'Mengambil daftar jalur dengan paginasi dan filter opsional',
     args: {
