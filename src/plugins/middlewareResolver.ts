@@ -17,7 +17,7 @@ const filteredAuthFields: AllowedFieldTypes = {
 };
 
 const filteredRoleFields: AllowedFieldTypes = {
-    Query: ['getUser'],
+    Query: ['userGet'],
     Mutation: [
         'login',
         // 'userCreate',
@@ -25,7 +25,6 @@ const filteredRoleFields: AllowedFieldTypes = {
         // 'userDelete',
         'userSelectRole',
         // 'userAssignRole',
-        'userGet',
         'userResetPassword',
         'userChangePassword',
         'loginsso',
