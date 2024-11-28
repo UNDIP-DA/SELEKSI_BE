@@ -25,6 +25,7 @@ const filteredRoleFields: AllowedFieldTypes = {
         // 'userDelete',
         'userSelectRole',
         // 'userAssignRole',
+        'userGet',
         'userResetPassword',
         'userChangePassword',
         'loginsso',
