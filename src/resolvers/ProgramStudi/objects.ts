@@ -6,6 +6,8 @@ export const ProgramStudiObject = objectType({
     description: 'Objek yang merepresentasikan data program studi dalam sistem',
     definition(t) {
         t.field(ProgramStudi.id);
+        t.field(ProgramStudi.kode_pmb);
+        t.field(ProgramStudi.kode_regonline);
         t.field(ProgramStudi.nama);
         t.field(ProgramStudi.fakultas_id);
         t.field(ProgramStudi.strata_id);

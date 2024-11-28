@@ -10,11 +10,8 @@ export const JalurCreateInput = inputObjectType({
         t.nonNull.string('nama_jalur', {
             description: 'Nama jalur penerimaan (wajib diisi)'
         });
-        t.string('keterangan', {
-            description: 'Keterangan jalur penerimaan'
-        });
-        t.boolean('status', {
-            description: 'Status aktif jalur penerimaan'
+        t.string('strata_id', {
+            description: 'Strata ID (optional)'
         });
     },
 });
@@ -29,11 +26,8 @@ export const JalurUpdateInput = inputObjectType({
         t.string('nama_jalur', {
             description: 'Nama jalur yang akan diperbarui'
         });
-        t.string('keterangan', {
-            description: 'Keterangan jalur yang akan diperbarui'
-        });
-        t.boolean('status', {
-            description: 'Status aktif jalur yang akan diperbarui'
+        t.string('strata_id', {
+            description: 'Strata ID'
         });
     },
 });
@@ -45,8 +39,8 @@ export const JalurWhereInput = inputObjectType({
         t.string('search', {
             description: 'Kata kunci pencarian untuk kode_jalur atau nama_jalur'
         });
-        t.boolean('status', {
-            description: 'Filter berdasarkan status'
+        t.int('strata_id', {
+            description: 'Filter berdasarkan strata'
         });
         t.string('sortBy', {
             description: 'Nama field untuk pengurutan data'

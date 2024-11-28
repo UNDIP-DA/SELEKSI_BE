@@ -68,7 +68,7 @@ export const programStudiSyncFromPmb = mutationField('programStudiSyncFromPmb', 
             const programStudiList = response2.programStudiGetList.data;
             for (const programStudi of programStudiList) {
                 await prisma.programStudi.upsert({
-                    where: { id: programStudi.id }, // Menggunakan ID dari API sebagai unique identifier
+                    where: { kode_pmb: programStudi.id }, // Menggunakan ID dari API sebagai unique identifier
                     update: {
                         uuid: programStudi.uuid,
                         nama: programStudi.nama,
@@ -77,7 +77,7 @@ export const programStudiSyncFromPmb = mutationField('programStudiSyncFromPmb', 
                         status: programStudi.status === 1, // Ubah status (angka) ke Boolean
                     },
                     create: {
-                        id: programStudi.id, // Harus sama dengan data dari API
+                        kode_pmb: programStudi.id, // Harus sama dengan data dari API
                         uuid: programStudi.uuid,
                         nama: programStudi.nama,
                         fakultas_id: programStudi.fakultas_id,

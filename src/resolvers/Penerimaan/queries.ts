@@ -24,7 +24,7 @@ export const penerimaanGetList = queryField('penerimaanGetList', {
         where: PenerimaanWhereInput,
     },
     resolve: async (_, { where }, { prisma }) => {
-        const { search, tahap, status, sortBy, descending, take = 10, skip = 0 } = where || {};
+        const { search, approval_id, status, sortBy, descending, take = 10, skip = 0 } = where || {};
 
         const whereClause = {
             AND: [
@@ -34,7 +34,7 @@ export const penerimaanGetList = queryField('penerimaanGetList', {
                         { keterangan: { contains: search } },
                     ],
                 } : {},
-                tahap ? { tahap } : {},
+                approval_id ? { approval_id } : {},
                 status !== undefined ? { status } : {},
             ],
         };

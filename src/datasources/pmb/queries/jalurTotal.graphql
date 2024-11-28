@@ -1,0 +1,5 @@
+query JalurGetList {
+  jalurGetList {
+    total
+  }
+}

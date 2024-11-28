@@ -7,6 +7,12 @@ export const ProgramStudiCreateInput = inputObjectType({
         t.nonNull.string('nama', {
             description: 'Nama program studi (wajib diisi)'
         });
+        t.nonNull.int('kode_pmb', {
+            description: 'Kode dari PMB (wajib diisi)'
+        });
+        t.int('kode_reqonline', {
+            description: 'Kode dari Regonline (optional)'
+        });
         t.nonNull.int('fakultas_id', {
             description: 'ID fakultas (wajib diisi)'
         });
@@ -24,6 +30,9 @@ export const ProgramStudiUpdateInput = inputObjectType({
     description: 'Input untuk memperbarui data program studi yang sudah ada',
     definition(t) {
         t.string('nama');
+        t.int('kode_pmb');
+        t.int('kode_regonline');
+        t.int('fakultas_id');
         t.int('fakultas_id');
         t.int('strata_id');
         t.boolean('status');
@@ -36,6 +45,12 @@ export const ProgramStudiWhereInput = inputObjectType({
     definition(t) {
         t.string('search', {
             description: 'Kata kunci pencarian untuk nama program studi'
+        });
+        t.int('kode_pmb', {
+            description: 'Filter berdasarkan kode pmb'
+        });
+        t.int('kode_regonline', {
+            description: 'Filter berdasarkan kode regonline'
         });
         t.int('fakultas_id', {
             description: 'Filter berdasarkan fakultas'

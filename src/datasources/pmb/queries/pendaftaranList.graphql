@@ -66,6 +66,7 @@ query GetListPendaftarant($take: Int, $statusPenerimaan: Int) {
           id
           nama_jalur
           kode_jalur
+          strata_id
         }
       }
       status_penerimaan

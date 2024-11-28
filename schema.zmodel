@@ -12,20 +12,21 @@ datasource db {
 }
 
 model User {
-  id                  Int        @id @default(autoincrement())
+  id                  Int           @id @default(autoincrement())
   name                String
-  username            String     @unique @length(min: 3)
-  identity            String     @unique
-  email               String     @unique @email('must be a valid email')
-  password            String     @password @length(min: 8)
-  roles               Role[]     @relation("UserRole")
+  username            String        @unique @length(min: 3)
+  identity            String        @unique
+  email               String        @unique @email('must be a valid email')
+  password            String        @password @length(min: 8)
+  roles               Role[]        @relation("UserRole")
   roleUnits           RoleUnit[]
   eduk_status         String?
   eduk_foto           String?
   eduk_gelar_depan    String?
   eduk_gelar_belakang String?
-  created_at          DateTime   @default(now())
-  updated_at          DateTime   @updatedAt
+  approvalLogList     ApprovalLog[]
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @updatedAt
 
   @@allow('all', auth().roles?[name == 'system'])
   @@allow('read', true)
@@ -33,14 +34,15 @@ model User {
 }
 
 model Role {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  description String?
-  users       User[]       @relation("UserRole")
-  permissions Permission[] @relation("RolePermission")
-  roleUnits   RoleUnit[]
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
+  description  String?
+  users        User[]       @relation("UserRole")
+  permissions  Permission[] @relation("RolePermission")
+  roleUnits    RoleUnit[]
+  approvalList Approval[]
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
 
   @@allow('all', false)
   @@allow('read', true)
@@ -118,18 +120,21 @@ model Mahasiswa {
   ipk                     Float?
   ukt                     Float? // SKIP
   uktGol                  Int? // SKIP
+  ipi                     Float? // SKIP
   spp                     Float? // SKIP
   matrikulasi             Boolean? // SKIP
   kelas                   String? // SKIP
   riwayat_pendidikan_sma  String?
   riwayat_pendidikan_univ String?
-  data_ayah               String? // SKIP
-  data_ibu                String? // SKIP
-  data_wali               String? // SKIP
+  nama_ayah               String? // SKIP
+  nama_ibu                String? // SKIP
+  nama_wali               String? // SKIP
   foto                    String?
   ijazah                  String?
   penerimaan              Penerimaan?  @relation(fields: [penerimaan_id], references: [id])
   penerimaan_id           Int?
+  jalur                   Jalur        @relation(fields: [jalur_id], references: [id])
+  jalur_id                Int
   created_at              DateTime     @default(now())
   updated_at              DateTime     @updatedAt()
 
@@ -139,17 +144,19 @@ model Mahasiswa {
 }
 
 model ProgramStudi {
-  id            Int         @id
-  uuid          String      @unique
-  nama          String
-  fakultas_id   Int
-  strata_id     Int
-  status        Boolean?
-  fakultas      Fakultas    @relation(fields: [fakultas_id], references: [id])
-  strata        Strata      @relation(fields: [strata_id], references: [id])
-  mahasiswaList Mahasiswa[]
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt
+  id             Int         @id @default(autoincrement())
+  uuid           String      @unique
+  kode_pmb       Int         @unique
+  kode_regonline Int?        @unique
+  nama           String
+  fakultas_id    Int
+  strata_id      Int
+  status         Boolean?
+  fakultas       Fakultas    @relation(fields: [fakultas_id], references: [id])
+  strata         Strata      @relation(fields: [strata_id], references: [id])
+  mahasiswaList  Mahasiswa[]
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
 
   @@map("program_studi")
   @@allow('all', auth().roles?[name == 'system'])
@@ -173,6 +180,7 @@ model Strata {
   nama             String
   keterangan       String?
   programStudiList ProgramStudi[]
+  jalurList        Jalur[]
   created_at       DateTime       @default(now())
   updated_at       DateTime       @updatedAt
 
@@ -181,18 +189,51 @@ model Strata {
   @@allow('read', true)
 }
 
+model ApprovalLog {
+  id            Int        @id @default(autoincrement())
+  penerimaan    Penerimaan @relation(fields: [penerimaan_id], references: [id])
+  penerimaan_id Int
+  approval      Approval   @relation(fields: [approval_id], references: [id])
+  approval_id   Int
+  user          User       @relation(fields: [user_id], references: [id])
+  user_id       Int
+  catatan       String?
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+
+  @@map("approval_log")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
+model Approval {
+  id              Int           @id @default(autoincrement())
+  nama            String
+  role            Role          @relation(fields: [role_id], references: [id])
+  role_id         Int
+  approvalLogList ApprovalLog[]
+  penerimaanList  Penerimaan[]
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  @@map("approval")
+  @@allow('all', auth().roles?[name == 'system'])
+  @@allow('read', true)
+}
+
 model Penerimaan {
-  id                  Int               @id @default(autoincrement())
-  uuid                String            @unique @default(uuid())
-  nama                String
-  keterangan          String?
-  catatan             String?
-  tahap               String?
-  status              Boolean?
-  mahasiswaList       Mahasiswa[]
-  penerimaanJalurList PenerimaanJalur[]
-  created_at          DateTime          @default(now())
-  updated_at          DateTime          @updatedAt
+  id              Int           @id @default(autoincrement())
+  uuid            String        @unique @default(uuid())
+  nama            String
+  keterangan      String?
+  catatan         String?
+  approval        Approval      @relation(fields: [approval_id], references: [id])
+  approval_id     Int
+  status          Boolean?
+  mahasiswaList   Mahasiswa[]
+  approvalLogList ApprovalLog[]
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
 
   @@map("penerimaan")
   @@allow('all', auth().roles?[name == 'system'])
@@ -200,30 +241,16 @@ model Penerimaan {
 }
 
 model Jalur {
-  id                  Int               @id @default(autoincrement())
-  kode_jalur          String
-  nama_jalur          String
-  keterangan          String?
-  status              Boolean?
-  penerimaanJalurList PenerimaanJalur[]
-  created_at          DateTime          @default(now())
-  updated_at          DateTime          @updatedAt
+  id            Int         @id
+  kode_jalur    Int         @unique
+  nama_jalur    String
+  strata        Strata?     @relation(fields: [strata_id], references: [id])
+  strata_id     Int?
+  mahasiswaList Mahasiswa[]
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
 
   @@map("jalur")
-  @@allow('all', auth().roles?[name == 'system'])
-  @@allow('read', true)
-}
-
-model PenerimaanJalur {
-  id            Int        @id @default(autoincrement())
-  penerimaan    Penerimaan @relation(fields: [penerimaan_id], references: [id])
-  penerimaan_id Int
-  jalur         Jalur      @relation(fields: [jalur_id], references: [id])
-  jalur_id      Int
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @updatedAt
-
-  @@map("penerimaan_jalur")
   @@allow('all', auth().roles?[name == 'system'])
   @@allow('read', true)
 }

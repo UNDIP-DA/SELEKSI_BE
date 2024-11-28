@@ -13,9 +13,9 @@ export const PenerimaanCreateInput = inputObjectType({
         t.string('catatan', {
             description: 'Catatan untuk penerimaan'
         });
-        t.string('tahap', {
-            description: 'Tahap penerimaan'
-        });
+        t.int('approval_id', {
+            description: 'ID approval'
+        })
         t.boolean('status', {
             description: 'Status aktif penerimaan'
         });
@@ -35,9 +35,9 @@ export const PenerimaanUpdateInput = inputObjectType({
         t.string('catatan', {
             description: 'Catatan yang akan diperbarui'
         });
-        t.string('tahap', {
-            description: 'Tahap penerimaan yang akan diperbarui'
-        });
+        t.int('approval_id', {
+            description: 'ID approval'
+        })
         t.boolean('status', {
             description: 'Status aktif yang akan diperbarui'
         });
@@ -51,9 +51,9 @@ export const PenerimaanWhereInput = inputObjectType({
         t.string('search', {
             description: 'Kata kunci pencarian untuk nama penerimaan'
         });
-        t.string('tahap', {
-            description: 'Filter berdasarkan tahap penerimaan'
-        });
+        t.int('approval_id', {
+            description: 'ID approval'
+        })
         t.boolean('status', {
             description: 'Filter berdasarkan status penerimaan'
         });

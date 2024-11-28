@@ -8,10 +8,9 @@ export const JalurObject = objectType({
         t.field(Jalur.id);
         t.field(Jalur.kode_jalur);
         t.field(Jalur.nama_jalur);
-        t.field(Jalur.keterangan);
-        t.field(Jalur.status);
-        // t.field(Jalur.mahasiswaList);
-        t.field(Jalur.penerimaanJalurList);
+        t.field(Jalur.mahasiswaList);
+        t.field(Jalur.strata);
+        t.field(Jalur.strata_id);
         t.field(Jalur.created_at);
         t.field(Jalur.updated_at);
     },

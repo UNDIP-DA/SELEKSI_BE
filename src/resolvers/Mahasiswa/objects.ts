@@ -56,19 +56,21 @@ export const MahasiswaObject = objectType({
         t.field(Mahasiswa.riwayat_pendidikan_univ)
 
         // Data Keluarga
-        t.field(Mahasiswa.data_ayah)
-        t.field(Mahasiswa.data_ibu)
-        t.field(Mahasiswa.data_wali)
+        t.field(Mahasiswa.nama_ayah)
+        t.field(Mahasiswa.nama_ibu)
+        t.field(Mahasiswa.nama_wali)
 
         // Dokumen
         t.field(Mahasiswa.foto)
         t.field(Mahasiswa.ijazah)
 
-        // Relasi Penerimaan dan Jalur
+        // Relasi Penerimaan, Jalur dan ProgramStudi
         t.field(Mahasiswa.penerimaan)
         t.field(Mahasiswa.penerimaan_id)
-        // t.field(Mahasiswa.jalur)
-        // t.field(Mahasiswa.jalur_id)
+        t.field(Mahasiswa.jalur)
+        t.field(Mahasiswa.jalur_id)
+        t.field(Mahasiswa.programStudi)
+        t.field(Mahasiswa.programStudi_id)
 
         // Timestamp
         t.field(Mahasiswa.created_at)

@@ -16,6 +16,7 @@ export const UserObject = objectType({
         t.field(User.eduk_foto);
         t.field(User.eduk_gelar_depan);
         t.field(User.eduk_gelar_belakang);
+        t.field(User.approvalLogList);
         t.field(User.created_at);
         t.field(User.updated_at);
     },

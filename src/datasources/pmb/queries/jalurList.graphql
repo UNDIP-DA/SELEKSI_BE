@@ -1,0 +1,10 @@
+query JalurGetList($take: Int) {
+  jalurGetList(take: $take) {
+    data {
+      id
+      kode_jalur
+      nama_jalur
+      strata_id
+    }
+  }
+}

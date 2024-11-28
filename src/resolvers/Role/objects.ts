@@ -11,6 +11,7 @@ export const RoleObject = objectType({
         t.field(Role.users);
         t.field(Role.permissions);
         t.field(Role.roleUnits);
+        t.field(Role.approvalList);
         t.field(Role.created_at);
         t.field(Role.updated_at);
     },

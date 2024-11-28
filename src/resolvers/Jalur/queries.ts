@@ -24,7 +24,7 @@ export const jalurGetList = queryField('jalurGetList', {
         where: JalurWhereInput,
     },
     resolve: async (_, { where }, { prisma }) => {
-        const { search, status, sortBy, descending, take = 10, skip = 0 } = where || {};
+        const { search, strata_id, sortBy, descending, take = 10, skip = 0 } = where || {};
 
         const whereClause = {
             AND: [
@@ -34,7 +34,7 @@ export const jalurGetList = queryField('jalurGetList', {
                         { nama_jalur: { contains: search } },
                     ],
                 } : {},
-                status !== undefined ? { status } : {},
+                strata_id ? { strata_id } : {},
             ],
         };
 

@@ -24,13 +24,15 @@ export const programStudiGetList = queryField('programStudiGetList', {
         where: ProgramStudiWhereInput,
     },
     resolve: async (_, { where }, { prisma }) => {
-        const { search, fakultas_id, strata_id, status, sortBy, descending, take = 10, skip = 0 } = where || {};
+        const { search, kode_pmb, kode_regonline, fakultas_id, strata_id, status, sortBy, descending, take = 10, skip = 0 } = where || {};
 
         const whereClause = {
             AND: [
                 search ? {
                     nama: { contains: search },
                 } : {},
+                kode_pmb ? { kode_pmb } : {},
+                kode_regonline ? { kode_regonline } : {},
                 fakultas_id ? { fakultas_id } : {},
                 strata_id ? { strata_id } : {},
                 status !== undefined ? { status } : {},

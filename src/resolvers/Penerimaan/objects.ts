@@ -10,10 +10,11 @@ export const PenerimaanObject = objectType({
         t.field(Penerimaan.nama);
         t.field(Penerimaan.keterangan);
         t.field(Penerimaan.catatan);
-        t.field(Penerimaan.tahap);
+        t.field(Penerimaan.approval_id);
+        t.field(Penerimaan.approval)
+        t.field(Penerimaan.approvalLogList);
         t.field(Penerimaan.status);
         t.field(Penerimaan.mahasiswaList);
-        t.field(Penerimaan.penerimaanJalurList);
         t.field(Penerimaan.created_at);
         t.field(Penerimaan.updated_at);
     },

@@ -158,15 +158,17 @@ export interface PembukaanJalur {
     Jalur: Jalur;
 }
 
-export interface Jalur {
-    id: number;
-    nama_jalur: string;
-    kode_jalur: number;
-}
 
 interface StatusPenerimaan {
     id: number;
     nama: string;
+}
+
+export interface Jalur {
+    id: number;
+    kode_jalur: number;
+    nama_jalur: string;
+    strata_id: number;
 }
 
 export const fetch = async<T>(

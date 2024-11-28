@@ -17,3 +17,5 @@ Todolist
 3. Add kode prodi regonline
 4. Export import excel
 5. ~~Mengganti redaksi endpoint dengan prefix model~~
+6. trx_penerimaan di buat manual sebagai tabel wadah
+7. aproval data mahasiswa, oleh : manager_lp2mp -> supervisor_buk -> supervisor_bak
