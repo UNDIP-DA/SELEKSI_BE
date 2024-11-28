@@ -228,7 +228,7 @@ model Penerimaan {
   keterangan      String?
   catatan         String?
   approval        Approval      @relation(fields: [approval_id], references: [id])
-  approval_id     Int
+  approval_id     Int           @default(1) // Default nilai 1
   status          Boolean?
   mahasiswaList   Mahasiswa[]
   approvalLogList ApprovalLog[]
