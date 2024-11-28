@@ -208,7 +208,7 @@ model ApprovalLog {
 
 model Approval {
   id              Int           @id @default(autoincrement())
-  nama            String
+  nama            String        @unique
   role            Role          @relation(fields: [role_id], references: [id])
   role_id         Int
   approvalLogList ApprovalLog[]
