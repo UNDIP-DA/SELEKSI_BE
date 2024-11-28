@@ -80,7 +80,7 @@ export interface Mahasiswa {
     uuid: string;
     nomor: string;
     User: User;
-    ProdiTerpilih?: ProdiTerpilih;
+    ProdiTerpilih: ProdiTerpilih;
     PembukaanJalur: PembukaanJalur;
     status_penerimaan: number;
     StatusPenerimaan: StatusPenerimaan;

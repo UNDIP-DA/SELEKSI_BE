@@ -1,0 +1,13 @@
+query PembukaanJalurGetList($take: Int) {
+  pembukaanJalurGetList(take: $take) {
+    data {
+      id
+      nama_custom
+      Jalur {
+        id
+        nama_jalur
+        kode_jalur
+      }
+    }
+  }
+}

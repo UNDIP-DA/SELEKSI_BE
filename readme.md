@@ -7,7 +7,7 @@ langkah install
 5. jalankan : npm install
 6. jalankan : npm run generate
 7. jalankan : npm run seed
-8. jalankan : npm run dev
+8. jalankan : npm run build
 9. buka : http://localhost:4000/graphql
 
 Todolist

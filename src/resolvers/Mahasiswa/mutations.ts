@@ -1,6 +1,6 @@
 import { intArg, mutationField, nonNull } from 'nexus';
 import { Mahasiswa } from 'nexus-prisma';
-import { MahasiswaCreateInput, MahasiswaUpdateInput } from './inputs';
+import { MahasiswaCreateInput, MahasiswaSyncInput, MahasiswaUpdateInput } from './inputs';
 import { Mahasiswa as MahasiswaModelFromPmb, fetch as qfetchFromPmb } from '../../datasources/pmb/query';
 
 export const mahasiswaCreate = mutationField('mahasiswaCreate', {
@@ -60,16 +60,25 @@ export const mahasiswaDelete = mutationField('mahasiswaDelete', {
 export const mahasiswaSyncFromPmb = mutationField('mahasiswaSyncFromPmb', {
     type: 'Int',
     description: 'Mengsinkronkan data mahasiswa dari pmb',
-    resolve: async (_, { id }, { prisma }) => {
+    args: {
+        data: nonNull(MahasiswaSyncInput),
+    },
+    resolve: async (_, { data }, { prisma }) => {
         try {
             // 
-            const response1 = await qfetchFromPmb<{ getListPendaftaran: { total: number } }>({ gqlQuery: 'pendaftaranTotal', params: { statusPenerimaan: 9 } });
+            // console.log('Sync data mahasiswa dari PMB', pembukaan_jalur_id);
+            const response1 = await qfetchFromPmb<{ getListPendaftaran: { total: number } }>({ gqlQuery: 'pendaftaranTotal', params: { statusPenerimaan: 9, pembukaanJalurId: data.pembukaan_jalur_id } });
             const mahasiswaTotal = response1.getListPendaftaran.total;
             // console.log('Total mahasiswa dari PMB:', mahasiswaTotal);
-            const response2 = await qfetchFromPmb<{ getListPendaftaran: { data: MahasiswaModelFromPmb[] } }>({ gqlQuery: 'pendaftaranList', params: { statusPenerimaan: 9, take: mahasiswaTotal } });
+            const response2 = await qfetchFromPmb<{ getListPendaftaran: { data: MahasiswaModelFromPmb[] } }>({ gqlQuery: 'pendaftaranList', params: { statusPenerimaan: 9, pembukaanJalurId: data.pembukaan_jalur_id, take: mahasiswaTotal } });
             const mahasiswaList = response2.getListPendaftaran.data;
+            // console.log('Mahasiswa dari PMB:', mahasiswaList);
             for (const mahasiswa of mahasiswaList) {
                 // console.log('mhs', mahasiswa.ProdiTerpilih);
+                const programStudi = await prisma.programStudi.findUnique({
+                    'where': { 'kode_pmb': mahasiswa.ProdiTerpilih.ProgramStudi.id }
+                });
+                // console.log('Prodi:', programStudi.id);
                 await prisma.mahasiswa.upsert({
                     where: { uuid: mahasiswa.uuid }, // Menggunakan ID sebagai unique identifier
                     update: {
@@ -94,12 +103,13 @@ export const mahasiswaSyncFromPmb = mutationField('mahasiswaSyncFromPmb', {
                         kode_pos: mahasiswa.User.DataDiri.kode_pos ?? null,
                         email: mahasiswa.User.email,
                         no_hp: mahasiswa.User.telepon,
-                        programStudi_id: mahasiswa.ProdiTerpilih?.ProgramStudi.id ?? null,
                         riwayat_pendidikan_sma: mahasiswa.User.DataPendidikan[0].Sekolah?.nama_sekolah ?? null,
                         riwayat_pendidikan_univ: mahasiswa.User.DataPendidikan[0].Universitas?.nama ?? null,
                         foto: mahasiswa.User.DataDiri.foto_url,
                         ijazah: mahasiswa.User.DataPendidikan[0].Jenjang.nama,
-                        // penerimaan_id:  
+                        programStudi_id: programStudi.id,
+                        penerimaan_id: data.penerimaan_id,
+                        jalur_id: mahasiswa.PembukaanJalur.Jalur.id
                     },
                     create: {
                         uuid: mahasiswa.uuid,
@@ -123,12 +133,13 @@ export const mahasiswaSyncFromPmb = mutationField('mahasiswaSyncFromPmb', {
                         kode_pos: mahasiswa.User.DataDiri.kode_pos ?? null,
                         email: mahasiswa.User.email,
                         no_hp: mahasiswa.User.telepon,
-                        programStudi_id: mahasiswa.ProdiTerpilih?.ProgramStudi.id ?? null,
                         riwayat_pendidikan_sma: mahasiswa.User.DataPendidikan[0].Sekolah?.nama_sekolah ?? null,
                         riwayat_pendidikan_univ: mahasiswa.User.DataPendidikan[0].Universitas?.nama ?? null,
                         foto: mahasiswa.User.DataDiri.foto_url,
                         ijazah: mahasiswa.User.DataPendidikan[0].Jenjang.nama,
-                        // penerimaan_id:  
+                        programStudi_id: programStudi.id,
+                        penerimaan_id: data.penerimaan_id,
+                        jalur_id: mahasiswa.PembukaanJalur.Jalur.id
                     },
                 });
             }

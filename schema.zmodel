@@ -90,8 +90,8 @@ model RoleUnit {
 }
 
 model Mahasiswa {
-  id                      Int          @id @default(autoincrement())
-  uuid                    String       @unique
+  id                      Int           @id @default(autoincrement())
+  uuid                    String        @unique
   nomor_peserta           String?
   nama                    String
   status_kip              Boolean? // SKIP
@@ -99,12 +99,12 @@ model Mahasiswa {
   tanggal_lahir           DateTime?
   jenis_kelamin           String
   golongan_darah          String?
-  agama                   Agama?       @relation(fields: [agama_id], references: [id])
+  agama                   Agama?        @relation(fields: [agama_id], references: [id])
   agama_id                Int?
   nik                     String?
-  negara                  Negara?      @relation(fields: [negara_id], references: [id])
+  negara                  Negara?       @relation(fields: [negara_id], references: [id])
   negara_id               Int?
-  wilayah                 Wilayah?     @relation(fields: [wilayah_id], references: [id])
+  wilayah                 Wilayah?      @relation(fields: [wilayah_id], references: [id])
   wilayah_id              Int?
   nama_desa               String?
   nama_dusun              String?
@@ -115,7 +115,7 @@ model Mahasiswa {
   email                   String?
   no_hp                   String?
   nim_sebelumnya          String? // SKIP
-  programStudi            ProgramStudi @relation(fields: [programStudi_id], references: [id])
+  programStudi            ProgramStudi? @relation(fields: [programStudi_id], references: [id])
   programStudi_id         Int
   ipk                     Float?
   ukt                     Float? // SKIP
@@ -131,12 +131,12 @@ model Mahasiswa {
   nama_wali               String? // SKIP
   foto                    String?
   ijazah                  String?
-  penerimaan              Penerimaan?  @relation(fields: [penerimaan_id], references: [id])
-  penerimaan_id           Int?
-  jalur                   Jalur        @relation(fields: [jalur_id], references: [id])
+  penerimaan              Penerimaan?   @relation(fields: [penerimaan_id], references: [id])
+  penerimaan_id           Int
+  jalur                   Jalur?        @relation(fields: [jalur_id], references: [id])
   jalur_id                Int
-  created_at              DateTime     @default(now())
-  updated_at              DateTime     @updatedAt()
+  created_at              DateTime      @default(now())
+  updated_at              DateTime      @updatedAt()
 
   @@map("mahasiswa")
   @@allow('all', auth().roles?[name == 'system'])

@@ -1,5 +1,13 @@
-query GetListPendaftarant($take: Int, $statusPenerimaan: Int) {
-  getListPendaftaran(take: $take, status_penerimaan: $statusPenerimaan) {
+query GetListPendaftaran(
+  $take: Int
+  $statusPenerimaan: Int
+  $pembukaanJalurId: Int
+) {
+  getListPendaftaran(
+    take: $take
+    status_penerimaan: $statusPenerimaan
+    pembukaan_jalur_id: $pembukaanJalurId
+  ) {
     data {
       id
       uuid

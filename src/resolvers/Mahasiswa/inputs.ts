@@ -255,6 +255,19 @@ export const MahasiswaUpdateInput = inputObjectType({
     },
 })
 
+export const MahasiswaSyncInput = inputObjectType({
+    name: 'MahasiswaSyncInput',
+    description: 'Input untuk mengsinkron data mahasiswa dari input kode jalur',
+    definition(t) {
+        t.nonNull.int('pembukaan_jalur_id', {
+            description: 'ID pembukaan jalur pada PMB penerimaan (wajib diisi)'
+        });
+        t.nonNull.int('penerimaan_id', {
+            description: 'ID penerimaan (wajib diisi)'
+        });
+    },
+});
+
 export const MahasiswaWhereInput = inputObjectType({
     name: 'MahasiswaWhereInput',
     description: 'Input type for filtering and pagination of mahasiswa',

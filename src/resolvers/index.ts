@@ -16,3 +16,4 @@ export * from './Universitas';
 export * from './Agama';
 export * from './Wilayah';
 export * from './Negara';
+export * from './PembukaanJalur';
