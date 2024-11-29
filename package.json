@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/server.ts",
-    "generate": "npx zenstack generate && npx prisma db push",
+    "generate": "npx zenstack generate && npx prisma db push --accept-data-loss",
     "generate:fresh": "npx zenstack generate && npx prisma migrate reset && npx prisma db push",
     "seed": "ts-node seeds/app.ts && ts-node seeds/roles.ts && ts-node seeds/permissions.ts && ts-node seeds/approvals.ts",
     "seed:roles": "ts-node seeds/roles.ts",
