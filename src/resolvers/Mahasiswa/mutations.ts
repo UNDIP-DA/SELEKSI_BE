@@ -143,7 +143,8 @@ export const mahasiswaSyncFromPmb = mutationField('mahasiswaSyncFromPmb', {
                     },
                 });
             }
-            return prisma.mahasiswa.count();
+            // return prisma.mahasiswa.count();
+            return mahasiswaList.length;
         } catch (error) {
             throw new Error('Gagal sync data mahasiswa dari pmb: ' + error);
         }
