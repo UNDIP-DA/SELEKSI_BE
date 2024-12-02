@@ -18,4 +18,4 @@ Todolist
 4. ~~Mengganti redaksi endpoint dengan prefix model~~
 5. ~~trx_penerimaan di buat manual sebagai tabel wadah~~
 6. ~~aproval data mahasiswa, oleh : manager_lp2mp -> supervisor_buk -> supervisor_bak~~
-7. test
+7. tests
