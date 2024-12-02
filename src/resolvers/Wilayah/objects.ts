@@ -7,6 +7,7 @@ export const WilayahObject = objectType({
     definition(t) {
         t.field(Wilayah.id)
         t.field(Wilayah.kode_wilayah)
+        t.field(Wilayah.parent)
         t.field(Wilayah.parent_id)
         t.field(Wilayah.tingkat)
         t.field(Wilayah.nama)
