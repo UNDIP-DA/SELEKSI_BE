@@ -35,7 +35,7 @@ export const programStudiGetList = queryField('programStudiGetList', {
                 kode_regonline ? { kode_regonline } : {},
                 fakultas_id ? { fakultas_id } : {},
                 strata_id ? { strata_id } : {},
-                status !== undefined ? { status } : {},
+                status != null ? { status } : {},
             ],
         };
 

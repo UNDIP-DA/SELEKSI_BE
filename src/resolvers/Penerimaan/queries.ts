@@ -35,7 +35,7 @@ export const penerimaanGetList = queryField('penerimaanGetList', {
                     ],
                 } : {},
                 approval_id ? { approval_id } : {},
-                status ? (status !== undefined ? { status } : {}) : {},
+                status != null ? { status } : {},
             ],
         };
 

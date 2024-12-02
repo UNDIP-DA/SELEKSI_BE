@@ -151,7 +151,7 @@ model ProgramStudi {
   nama           String
   fakultas_id    Int
   strata_id      Int
-  status         Boolean?
+  status         Boolean
   fakultas       Fakultas    @relation(fields: [fakultas_id], references: [id])
   strata         Strata      @relation(fields: [strata_id], references: [id])
   mahasiswaList  Mahasiswa[]
@@ -228,8 +228,8 @@ model Penerimaan {
   keterangan      String?
   catatan         String?
   approval        Approval      @relation(fields: [approval_id], references: [id])
-  approval_id     Int           @default(1) // Default nilai 1
-  status          Boolean?
+  approval_id     Int           @default(1)
+  status          Boolean       @default(false)
   mahasiswaList   Mahasiswa[]
   approvalLogList ApprovalLog[]
   created_at      DateTime      @default(now())
@@ -264,7 +264,7 @@ model Sekolah {
   wilayah      Wilayah?  @relation(fields: [wilayah_id], references: [id])
   wilayah_id   Int?
   akreditasi   String?
-  status       Boolean?
+  status       Boolean
   tipe         String?
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
@@ -283,7 +283,7 @@ model Universitas {
   nama       String
   wilayah    Wilayah?  @relation(fields: [wilayah_id], references: [id])
   wilayah_id Int?
-  status     Boolean?
+  status     Boolean
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? // soft delete
@@ -339,7 +339,7 @@ model Negara {
   kode_telp     String?
   region        String?
   subregion     String?
-  status        Boolean?
+  status        Boolean
   wilayahList   Wilayah[]
   mahasiswaList Mahasiswa[]
   created_at    DateTime    @default(now())
