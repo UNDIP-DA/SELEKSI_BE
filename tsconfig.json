@@ -12,6 +12,7 @@
       "express": ["./node_modules/@types/express"]
     }
   },
+  "files": ["src/global.d.ts"],
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

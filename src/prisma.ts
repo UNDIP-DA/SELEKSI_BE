@@ -2,7 +2,14 @@ import { PrismaClient } from '@prisma/client';
 import { enhance } from '@zenstackhq/runtime';
 
 export const enhancePrisma = async (userId?: number) => {
-    const prisma = new PrismaClient();
+
+    let prisma: PrismaClient;
+
+    if (!global.prisma) {
+        global.prisma = new PrismaClient();
+    }
+
+    prisma = global.prisma;
 
     if (userId) {
         // Jika userId diberikan, lakukan pencarian user
